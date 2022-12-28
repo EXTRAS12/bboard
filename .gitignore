@@ -1,0 +1,8 @@
+.idea
+.vscode
+venv
+.venv
+django_cache
+__pycache__/
+*/__pycache__/
+.mypy_cache
