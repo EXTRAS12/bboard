@@ -1,6 +1,15 @@
 header h1 {
-    background: url('bg.jpeg') left / auto 100% no-repeat , url("bg.jpeg") right / auto 100% no-repeat;
+  background: url('bg.jpeg') left / auto 100% no-repeat, url('bg.jpeg') right / auto 100% no-repeat;
 }
+
+img.main-image {
+  width: 300px;
+}
+
+img.additional-image {
+  width: 200px;
+}
+
 .root {
-    font-size: larger;
-    }
+  font-size: larger;
+}
