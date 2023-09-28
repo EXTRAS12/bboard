@@ -5,7 +5,8 @@ from .views import (BBLoginView, BBLogoutView, BBPasswordChangeView,
                     ChangeUserInfoView, RegisterDoneView, RegisterUserView,
                     DeleteUserView,
                     index, other_page, profile, user_activate, by_rubric, detail,
-                    profile_bb_detail, profile_bb_add, profile_bb_change, profile_bb_delete)
+                    profile_bb_detail, profile_bb_add, profile_bb_change, profile_bb_delete,
+                    redirect_view)
 
 app_name = 'main'
 urlpatterns = [
@@ -25,5 +26,6 @@ urlpatterns = [
     path('<int:rubric_pk>/<int:pk>/', detail, name='detail'),
     path('<int:pk>/', by_rubric, name='by_rubric'),
     path('<str:page>', other_page, name='other'),
+    path('<int:rubric_pk>/<int:pk>/<str:url>', redirect_view),
     path('', index, name='index'),
 ]

@@ -48,7 +48,7 @@ class SuperRubric(Rubric):
 
 class SubRubricManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(super_rubric__isnull=False)
+        return super().get_queryset().filter(super_rubric__isnull=False).select_related("super_rubric")
 
 
 class SubRubric(Rubric):
@@ -69,13 +69,18 @@ class Bb(models.Model):
                                verbose_name='Рубрика')
     title = models.CharField(max_length=40, verbose_name='Товар')
     content = models.TextField(verbose_name='Описание')
-    price = models.FloatField(default=0, verbose_name='Цена')
+    price = models.FloatField(default=0, blank=True, null=True, verbose_name='Цена')
     contacts = models.TextField(verbose_name='Контакты')
+    url = models.URLField(max_length=700, blank=True, null=True)
+    short_url = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name='Изображение')
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Автор объявления')
     is_active = models.BooleanField(default=True, db_index=True, verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
 
+    def __str__(self):
+        return self.title
+ 
     def delete(self, *args, **kwargs):
         for ai in self.additionalimage_set.all():
             ai.delete()
@@ -110,7 +115,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.bb.author, self.bb.title)
-
+ 
 
 def post_save_dispatcher(sender, **kwargs):
     author = kwargs['instance'].bb.author

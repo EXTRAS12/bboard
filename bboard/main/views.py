@@ -100,7 +100,7 @@ def detail(request, rubric_pk, pk):
 
 def by_rubric(request, pk):
     rubric = get_object_or_404(SubRubric, pk=pk)
-    bbs = Bb.objects.filter(is_active=True, rubric=pk)
+    bbs = Bb.objects.filter(is_active=True, rubric=pk).select_related('rubric')
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         q = Q(title__icontains=keyword) | Q(content__icontains=keyword)
@@ -136,7 +136,7 @@ def profile_bb_detail(request, pk):
 
 
 def index(request):
-    bbs = Bb.objects.filter(is_active=True)[:10]
+    bbs = Bb.objects.filter(is_active=True).select_related("rubric", "author")[:10]
     context = {'bbs': bbs}
     return render(request, "main/index.html", context)
 
@@ -149,6 +149,12 @@ def other_page(request, page):
         raise Http404
 
     return HttpResponse(template.render(request=request))
+
+
+def redirect_view(request,rubric_pk, pk, url):
+    short = get_object_or_404(Bb, rubric_id=rubric_pk, pk=pk, short_url=url, is_active=True)
+    new_url = str(short.url)
+    return redirect(new_url)
 
 
 def user_activate(request, sign):

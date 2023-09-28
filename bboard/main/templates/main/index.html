@@ -22,8 +22,12 @@
             </a>
             <div class="media-body">
                 <h3><a href="{% url 'main:detail' bb.rubric.pk bb.pk %}">{{ bb.title }}</a></h3>
-                <div>{{ bb.content }}</div>
+                <div>{{ bb.content|truncatewords:40 }}</div>
+                {%if bb.price %}
                 <p class="text-right font-weight-bold"> {{ bb.price }} руб. </p>
+        
+                {% endif %}
+                <a href="{% url 'main:detail' bb.rubric.pk bb.pk %}"> Читать далее </a>
                 <p class="text-right font-italic">{{ bb.created_at }}</p>
             </div>
         </li>

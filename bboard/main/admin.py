@@ -1,6 +1,7 @@
 from django.contrib import admin
 import datetime
-
+import random
+import string
 from .models import AdvUser, SubRubric, SuperRubric, Bb, AdditionalImage, Comment
 from .forms import SubRubricForm
 from .utilities import send_activation_notification
@@ -62,10 +63,12 @@ class SubRubricInline(admin.TabularInline):
 class SuperRubricAdmin(admin.ModelAdmin):
     exclude = ('super_rubric',)
     inlines = (SubRubricInline,)
+    list_select_related = ['super_rubric']
 
 
 class SubRubricAdmin(admin.ModelAdmin):
     form = SubRubricForm
+    list_select_related = ['super_rubric']
 
 
 class AdditionalImageInline(admin.TabularInline):
@@ -74,13 +77,29 @@ class AdditionalImageInline(admin.TabularInline):
 
 class BbAdmin(admin.ModelAdmin):
     list_display = ('rubric', 'title', 'content', 'author', 'created_at')
-    fields = (('rubric', 'author'), 'title', 'content', 'price',
+    fields = (('rubric', 'author'), 'title', 'content', 'price', 'url', 'short_url',
               'contacts', 'image', 'is_active')
     inlines = (AdditionalImageInline,)
+    list_select_related = ['author', 'rubric', 'rubric__super_rubric']
+
+    def save_model(self, request, obj, form, change):
+        
+        if form.has_changed():
+            random_chars_list = list(string.ascii_letters)
+            random_chars = ''
+            for i in range(6):
+                random_chars += random.choice(random_chars_list)
+            obj.short_url = random_chars
+            obj.save()
+        super().save_model(request, obj, form, change)
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_select_related = ['bb', 'bb__author']
 
 
 admin.site.register(AdvUser, AdvUserAdmin)
 admin.site.register(SuperRubric, SuperRubricAdmin)
 admin.site.register(SubRubric, SubRubricAdmin)
 admin.site.register(Bb, BbAdmin)
-admin.site.register(Comment)
+admin.site.register(Comment, CommentAdmin)

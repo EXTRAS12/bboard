@@ -58,6 +58,9 @@ class ChangeUserInfoForm(forms.ModelForm):
 
 class RegisterUserForm(forms.ModelForm):
     email = forms.EmailField(required=True, label="Адрес электронной почты")
+    username = forms.CharField(required=True, label="Ваш логин")
+    first_name = forms.CharField(label="Имя")
+    last_name = forms.CharField(label="Фамилия")
     password1 = forms.CharField(
         label="Пароль", widget=forms.PasswordInput, help_text=password_validation.password_validators_help_text_html()
     )

@@ -1,11 +1,16 @@
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
+
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-gtl)hwxpgddx31v8(0zsb!iur6qd4@25!s*7_t3afeu3xx=^%m"
+SECRET_KEY = os.getenv("secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,12 +34,21 @@ INSTALLED_APPS = [
     "captcha",
     "rest_framework",
     "corsheaders",
+    "debug_toolbar",
 
     "main.apps.MainConfig",
     "api.apps.ApiConfig",
 ]
 
 EMAIL_PORT = 1025
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = os.getenv("EMAIL_HOST")
+# EMAIL_PORT = os.getenv("EMAIL_PORT")
+# EMAIL_HOST_USER = os.getenv("HOST_USER")
+# EMAIL_HOST_PASSWORD = os.getenv("HOST_PASSWORD")
+# EMAIL_USE_TLS = False
+# EMAIL_USE_SSL = True
+# DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_EMAIL")
 
 
 MIDDLEWARE = [
@@ -46,11 +60,18 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 
 ROOT_URLCONF = "bboard.urls"
 
@@ -85,6 +106,17 @@ DATABASES = {
         "NAME": BASE_DIR / "bboard.data",
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.getenv("NAME"),
+#         'USER': os.getenv("USER"),
+#         'PASSWORD': os.getenv("PASSWORD"),
+#         'HOST': os.getenv("HOST"),
+#         'PORT': '',
+#     }
+# }
 
 
 # Password validation

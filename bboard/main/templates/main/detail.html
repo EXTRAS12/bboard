@@ -12,9 +12,14 @@
     <div class="col">
       <h2>{{ bb.title }}</h2>
       <p>{{ bb.content }}</p>
+      {% if bb.price %}
       <p class="font-weight-bold">{{ bb.price }} руб.</p>
+      {% endif %}
       <p>{{ bb.contacts }}</p>
       <p class="text-right font-italic">Добавлено {{ bb.created_at }}</p>
+      {% if bb.url %}
+      <a class="btn btn-primary" href="{{ bb.short_url }}">Перейти</a>
+      {% endif %}
     </div>
   </div>
 </div>
