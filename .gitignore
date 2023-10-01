@@ -7,3 +7,6 @@ __pycache__/
 */__pycache__/
 .mypy_cache
 .env
+README.md
+media
+/media
