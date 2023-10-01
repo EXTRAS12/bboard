@@ -24,6 +24,8 @@ from .utilities import signer
 @login_required
 def profile_bb_change(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
+    if not request.user == bb.author:
+        return redirect('/')
     if request.method == 'POST':
         form = BbForm(request.POST, request.FILES, instance=bb)
         if form.is_valid():
@@ -73,10 +75,10 @@ def profile_bb_add(request):
 
 
 
-def detail(request, rubric_pk, pk):
-    bb = get_object_or_404(Bb, pk=pk)
+def detail(request, rubric_slug, slug):
+    bb = get_object_or_404(Bb, slug=slug)
     ais = bb.additionalimage_set.all()
-    comments = Comment.objects.filter(bb=pk, is_active=True)
+    comments = Comment.objects.filter(bb__slug=slug, is_active=True)
     initial = {'bb': bb.pk}
     if request.user.is_authenticated:
         initial['author'] = request.user.username
@@ -98,9 +100,9 @@ def detail(request, rubric_pk, pk):
     return render(request, 'main/detail.html', context)
 
 
-def by_rubric(request, pk):
-    rubric = get_object_or_404(SubRubric, pk=pk)
-    bbs = Bb.objects.filter(is_active=True, rubric=pk).select_related('rubric')
+def by_rubric(request, rubric_slug):
+    rubric = get_object_or_404(SubRubric, slug=rubric_slug)
+    bbs = Bb.objects.filter(is_active=True, rubric__slug=rubric_slug).select_related('rubric')
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         q = Q(title__icontains=keyword) | Q(content__icontains=keyword)
@@ -127,8 +129,8 @@ def profile(request):
 
 
 @login_required
-def profile_bb_detail(request, pk):
-    bb = get_object_or_404(Bb, pk=pk)
+def profile_bb_detail(request, slug):
+    bb = get_object_or_404(Bb, slug=slug)
     ais = bb.additionalimage_set.all()
     context = {'bb': bb, 'ais': ais}
 
@@ -151,8 +153,8 @@ def other_page(request, page):
     return HttpResponse(template.render(request=request))
 
 
-def redirect_view(request,rubric_pk, pk, url):
-    short = get_object_or_404(Bb, rubric_id=rubric_pk, pk=pk, short_url=url, is_active=True)
+def redirect_view(request,rubric_slug, slug, url):
+    short = get_object_or_404(Bb, slug=slug, short_url=url, is_active=True)
     new_url = str(short.url)
     return redirect(new_url)
 

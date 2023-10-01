@@ -21,7 +21,7 @@
     <ul class="list-unstyled">
         {% for bb in bbs %}
         <li class="media my-5 p-3 border">
-            {% url 'main:profile_bb_detail' pk=bb.pk as url %}
+            {% url 'main:profile_bb_detail' slug=bb.slug as url %}
             <a href="{{ url }}{{ all }}">
             {% if bb.image %}
             <img class="mr-3" src="{% thumbnail bb.image 'default' %}">

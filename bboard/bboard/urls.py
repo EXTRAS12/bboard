@@ -12,12 +12,12 @@ urlpatterns = [
     path('', include('main.urls')),
 ]
 
+
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns.append(
-        path('static/<path:path>', never_cache(serve)))
+
     urlpatterns = [
             path('__debug__/', include(debug_toolbar.urls)),
     ]+urlpatterns
-    urlpatterns += static(settings.MEDIA_URL,
-                            document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    

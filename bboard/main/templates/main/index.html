@@ -13,21 +13,21 @@
         {% for bb in bbs %}
         <li class="media my-5 p-3 border">
 
-            <a href="{% url 'main:detail' bb.rubric.pk bb.pk %}">
+            <a href="{% url 'main:detail' bb.rubric.slug bb.slug %}">
             {% if bb.image %}
-            <img class="mr-3" src="{% thumbnail bb.image 'default' %}">
+            <img class="mr-3" src="{{ bb.image|thumbnail_url:'default'}}">
             {% else %}
             <img class="mr-3" src="{% static 'main/empty.jpg' %}">
             {% endif %}
             </a>
             <div class="media-body">
-                <h3><a href="{% url 'main:detail' bb.rubric.pk bb.pk %}">{{ bb.title }}</a></h3>
+                <h3><a href="{% url 'main:detail' bb.rubric.slug bb.slug %}">{{ bb.title }}</a></h3>
                 <div>{{ bb.content|truncatewords:40 }}</div>
                 {%if bb.price %}
                 <p class="text-right font-weight-bold"> {{ bb.price }} руб. </p>
         
                 {% endif %}
-                <a href="{% url 'main:detail' bb.rubric.pk bb.pk %}"> Читать далее </a>
+                <a href="{% url 'main:detail' bb.rubric.slug bb.slug %}"> Читать далее </a>
                 <p class="text-right font-italic">{{ bb.created_at }}</p>
             </div>
         </li>

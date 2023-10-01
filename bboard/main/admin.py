@@ -77,9 +77,10 @@ class AdditionalImageInline(admin.TabularInline):
 
 class BbAdmin(admin.ModelAdmin):
     list_display = ('rubric', 'title', 'content', 'author', 'created_at')
-    fields = (('rubric', 'author'), 'title', 'content', 'price', 'url', 'short_url',
+    fields = (('rubric', 'author'), 'title', 'slug', 'content', 'price', 'url', 'short_url',
               'contacts', 'image', 'is_active')
     inlines = (AdditionalImageInline,)
+    prepopulated_fields = {'slug': ('title',)}
     list_select_related = ['author', 'rubric', 'rubric__super_rubric']
 
     def save_model(self, request, obj, form, change):

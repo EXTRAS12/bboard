@@ -11,7 +11,9 @@
     <div class="col">
       <h2>{{ bb.title }}</h2>
       <p>{{ bb.content }}</p>
+      {% if bb.price %}
       <p class="font-weight-bold">{{ bb.price }} руб.</p>
+      {% endif %}
       <p>{{ bb.contacts }}</p>
       <p class="text-right font-italic">Добавлено {{ bb.created_at }}</p>
     </div>
@@ -26,5 +28,5 @@
   {% endfor %}
 </div>
 {% endif %}
-<p><a href="{% url 'main:by_rubric' pk=bb.rubric.pk %}{{ all }}"> Назад</a></p>
+<p><a href="{% url 'main:by_rubric' rubric_slug=bb.rubric.slug %}{{ all }}"> Назад</a></p>
 {% endblock %}

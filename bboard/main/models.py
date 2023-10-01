@@ -22,6 +22,7 @@ class AdvUser(AbstractUser):
 class Rubric(models.Model):
     name = models.CharField(max_length=20, db_index=True, unique=True,
                             verbose_name='Название')
+    slug = models.SlugField()
     order = models.SmallIntegerField(default=0, db_index=True,
                                      verbose_name="Порядок")
     super_rubric = models.ForeignKey('SuperRubric', on_delete=models.PROTECT,
@@ -68,6 +69,7 @@ class Bb(models.Model):
     rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,
                                verbose_name='Рубрика')
     title = models.CharField(max_length=40, verbose_name='Товар')
+    slug = models.SlugField()
     content = models.TextField(verbose_name='Описание')
     price = models.FloatField(default=0, blank=True, null=True, verbose_name='Цена')
     contacts = models.TextField(verbose_name='Контакты')

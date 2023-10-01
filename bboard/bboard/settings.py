@@ -143,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
@@ -153,20 +153,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = 'media/'
+
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'main/static'),
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 THUMBNAIL_ALIASES = {
-    "" : {
-        'default': {
-            'size': (96, 96),
-            'crop': 'scale',
-        },
+    '': {
+        'default': {'size': (96, 96), 'crop': 'scale'},
     },
 }
 
-THUMBNAIL_BASEDIR = 'thumbnails'
+THUMBNAIL_BASEDIR = 'media/thumbnails'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

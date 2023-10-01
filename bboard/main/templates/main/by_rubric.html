@@ -23,7 +23,7 @@
     <ul class="list-unstyled">
         {% for bb in bbs %}
         <li class="media my-5 p-3 border">
-            {% url 'main:detail' rubric_pk=rubric.pk pk=bb.pk as url %}
+            {% url 'main:detail' rubric_slug=rubric.slug slug=bb.slug as url %}
             <a href="{{ url }}{{ all }}">
             {% if bb.image %}
             <img class="mr-3" src="{% thumbnail bb.image 'default' %}">
@@ -39,7 +39,7 @@
                 
                 {% endif %}
                 
-                <a href="{% url 'main:detail' bb.rubric.pk bb.pk %}"> Читать далее </a>
+                <a href="{% url 'main:detail' bb.rubric.slug bb.slug %}"> Читать далее </a>
                 <p class="text-right font-italic">{{ bb.created_at }}</p>
             </div>
         </li>

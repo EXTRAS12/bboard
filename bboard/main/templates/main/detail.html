@@ -33,7 +33,7 @@
 </div>
 
 {% endif %}
-<p><a href="{% url 'main:by_rubric' pk=bb.rubric.pk %}{{ all }}"> Назад</a></p>
+<p><a href="{% url 'main:by_rubric' rubric_slug=bb.rubric.slug %}{{ all }}"> Назад</a></p>
 
 <h4 class="mt-5">Новый комментарий</h4>
 <form method="post">
