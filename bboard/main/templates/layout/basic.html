@@ -16,12 +16,13 @@
 
 <body class="container">
     <header class="mb-4">
-        <h1 class="display-1 text-center">Объявление</h1>
+        <h1 class="display-4 text-center">Доска объявлений avitopress</h1>
     </header>
         <div class="row">
             <ul class="col nav justify-content-end border">
-
+                {% if not user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'main:register' %}">Регистрация</a></li>
+                {% endif %}
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
                         role="button" aria-haspopup="true" aria-expanded="false">Профиль</a>

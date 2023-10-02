@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+body {
+  font-family: 'Ubuntu', sans-serif;
+}
 header h1 {
   background: url('bg.jpeg') left / auto 100% no-repeat, url('bg.jpeg') right / auto 100% no-repeat;
 }
