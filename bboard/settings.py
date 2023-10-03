@@ -15,7 +15,7 @@ SECRET_KEY = os.getenv("secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,15 +40,15 @@ INSTALLED_APPS = [
     "api.apps.ApiConfig",
 ]
 
-EMAIL_PORT = 1025
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = os.getenv("EMAIL_HOST")
-# EMAIL_PORT = os.getenv("EMAIL_PORT")
-# EMAIL_HOST_USER = os.getenv("HOST_USER")
-# EMAIL_HOST_PASSWORD = os.getenv("HOST_PASSWORD")
-# EMAIL_USE_TLS = False
-# EMAIL_USE_SSL = True
-# DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_EMAIL")
+# EMAIL_PORT = 1025
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("HOST_PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_EMAIL")
 
 
 MIDDLEWARE = [
@@ -67,11 +67,11 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-]
+# INTERNAL_IPS = [
+#     # ...
+#     "127.0.0.1",
+#     # ...
+# ]
 
 ROOT_URLCONF = "bboard.urls"
 
@@ -154,14 +154,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'main/static'),
-]
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [BASE_DIR / 'main/static']
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 THUMBNAIL_ALIASES = {
     '': {
