@@ -22,7 +22,7 @@ HOST_USER = ""
 HOST_PASSWORD = ""
 DEFAULT_EMAIL = ""
 ```
-# База данных PostgreSQL
+# База данных 
 
 ```
 NAME = ""
