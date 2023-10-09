@@ -22,7 +22,7 @@
             </a>
             <div class="media-body">
                 <h3><a href="{% url 'main:detail' bb.rubric.slug bb.slug %}">{{ bb.title }}</a></h3>
-                <div>{{ bb.content|truncatewords:40 }}</div>
+                <div>{{ bb.content|truncatewords:40|safe }}</div>
                 {%if bb.price %}
                 <p class="text-right font-weight-bold"> {{ bb.price }} руб. </p>
         

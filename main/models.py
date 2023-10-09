@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from slugify import slugify
 
 from django.db.models.signals import post_save
 
@@ -22,11 +23,15 @@ class AdvUser(AbstractUser):
 class Rubric(models.Model):
     name = models.CharField(max_length=20, db_index=True, unique=True,
                             verbose_name='Название')
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True, null=True)
     order = models.SmallIntegerField(default=0, db_index=True,
                                      verbose_name="Порядок")
     super_rubric = models.ForeignKey('SuperRubric', on_delete=models.PROTECT,
                                      null=True, blank=True, verbose_name='Надрубрика')
+
+    def save(self,  *args, **kwargs):
+        self.slug = slugify(self.name)
+        return super(Rubric, self).save(*args, **kwargs)
 
 
 class SuperRubricManager(models.Manager):
@@ -69,7 +74,7 @@ class Bb(models.Model):
     rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,
                                verbose_name='Рубрика')
     title = models.CharField(max_length=40, verbose_name='Товар')
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True, null=True)
     content = models.TextField(verbose_name='Описание')
     price = models.FloatField(default=0, blank=True, null=True, verbose_name='Цена')
     contacts = models.TextField(verbose_name='Контакты')
@@ -87,6 +92,10 @@ class Bb(models.Model):
         for ai in self.additionalimage_set.all():
             ai.delete()
         super().delete(*args, **kwargs)
+
+    def save(self,  *args, **kwargs):
+        self.slug = slugify(self.title)
+        return super(Bb, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Объявления'

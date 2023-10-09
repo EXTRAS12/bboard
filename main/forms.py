@@ -3,7 +3,7 @@ from django.forms import inlineformset_factory
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 from captcha.fields import CaptchaField
-
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from main.apps import user_registered
 from .models import AdvUser, SuperRubric, SubRubric, Bb, AdditionalImage, Comment
 
@@ -26,10 +26,15 @@ class GuestCommentForm(forms.ModelForm):
 
 
 class BbForm(forms.ModelForm):
+    content = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
+
     class Meta:
         model = Bb
         fields = '__all__'
-        widgets = {'author': forms.HiddenInput}
+        widgets = {
+            'author': forms.HiddenInput,
+            'slug': forms.HiddenInput,
+            'rubric': forms.Select(attrs={'class': 'form-control'}),}
 
 AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
 

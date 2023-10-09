@@ -35,7 +35,7 @@
                 <a href="{% url 'main:profile_bb_change' pk=bb.pk %}">Исправить</a>
                 <a href="{% url 'main:profile_bb_delete' pk=bb.pk %}">Удалить</a>
                 </p>
-                <div>{{ bb.content }}</div>
+                <div>{{ bb.content|safe }}</div>
                 <p class="text-right font-weight-bold"> {{ bb.price }} руб. </p>
                 <p class="text-right font-italic">{{ bb.created_at }}</p>
             </div>

@@ -144,3 +144,4 @@ media
 bboard.data
 settings.py
 .settings.py
+staticfiles

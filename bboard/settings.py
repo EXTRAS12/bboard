@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     # "debug_toolbar",
+    "ckeditor",
+    "ckeditor_uploader",
 
     "main.apps.MainConfig",
     "api.apps.ApiConfig",
@@ -53,6 +55,7 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_EMAIL")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -141,7 +144,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "Europe/Moscow"
 
@@ -155,9 +158,15 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATICFILES_DIRS = [BASE_DIR / 'main/static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'main/static')
+]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = 'pillow'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -174,3 +183,15 @@ THUMBNAIL_BASEDIR = 'media/thumbnails'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    }
+}

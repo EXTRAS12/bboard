@@ -1,5 +1,5 @@
 {% extends "layout/basic.html" %}
-
+{% load static %}
 {% load bootstrap4 %}
 
 {% block title %} Исправить объявление - профиль пользователя {% endblock%}
@@ -11,6 +11,7 @@
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    {{form.media}}
     {% bootstrap_form form layout='horizontal' %}
     {% bootstrap_formset formset layout='horizontal' %}
     {% buttons submit='исправить' %}{% endbuttons %}

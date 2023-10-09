@@ -11,7 +11,7 @@
     {% endif %}
     <div class="col">
       <h2>{{ bb.title }}</h2>
-      <p>{{ bb.content }}</p>
+      <p>{{ bb.content|safe  }}</p>
       {% if bb.price %}
       <p class="font-weight-bold">{{ bb.price }} руб.</p>
       {% endif %}

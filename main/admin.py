@@ -1,7 +1,9 @@
-from django.contrib import admin
 import datetime
 import random
 import string
+from django.contrib import admin
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django import forms
 from .models import AdvUser, SubRubric, SuperRubric, Bb, AdditionalImage, Comment
 from .forms import SubRubricForm
 from .utilities import send_activation_notification
@@ -56,18 +58,28 @@ class AdvUserAdmin(admin.ModelAdmin):
     actions = (send_activation_notifications, )
 
 
+class BbAdminForm(forms.ModelForm):
+    """Форма для контента ckeditor"""
+    content = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Bb
+        fields = '__all__'
+
+
 class SubRubricInline(admin.TabularInline):
     model = SubRubric
 
 
 class SuperRubricAdmin(admin.ModelAdmin):
-    exclude = ('super_rubric',)
+    exclude = ('super_rubric', 'slug')
     inlines = (SubRubricInline,)
     list_select_related = ['super_rubric']
 
 
 class SubRubricAdmin(admin.ModelAdmin):
     form = SubRubricForm
+    exclude = ('slug',)
     list_select_related = ['super_rubric']
 
 
@@ -80,7 +92,7 @@ class BbAdmin(admin.ModelAdmin):
     fields = (('rubric', 'author'), 'title', 'slug', 'content', 'price', 'url', 'short_url',
               'contacts', 'image', 'is_active')
     inlines = (AdditionalImageInline,)
-    prepopulated_fields = {'slug': ('title',)}
+    form = BbAdminForm
     list_select_related = ['author', 'rubric', 'rubric__super_rubric']
 
     def save_model(self, request, obj, form, change):
