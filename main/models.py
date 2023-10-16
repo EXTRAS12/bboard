@@ -1,3 +1,5 @@
+import random
+import string
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from slugify import slugify
@@ -94,6 +96,12 @@ class Bb(models.Model):
         super().delete(*args, **kwargs)
 
     def save(self,  *args, **kwargs):
+        random_chars_list = list(string.ascii_letters)
+        random_chars = ''
+        for i in range(8):
+            random_chars += random.choice(random_chars_list)
+            self.short_url = random_chars
+            
         self.slug = slugify(self.title)
         return super(Bb, self).save(*args, **kwargs)
 

@@ -20,33 +20,31 @@
         </div>
     </div>
     {% if bbs %}
-    <ul class="list-unstyled">
-        {% for bb in bbs %}
-        <li class="media my-5 p-3 border">
-            {% url 'main:detail' rubric_slug=rubric.slug slug=bb.slug as url %}
-            <a href="{{ url }}{{ all }}">
-            {% if bb.image %}
-            <img class="mr-3" src="{% thumbnail bb.image 'default' %}">
-            {% else %}
-            <img class="mr-3" src="{% static 'main/empty.jpg' %}">
-            {% endif %}
-            </a>
-            <div class="media-body">
-                <h3><a href="{{ url }}{{ all }}">{{ bb.title }}</a></h3>
-                <div>{{ bb.content|truncatewords:40|safe   }}</div>
+    {% for bb in bbs %}
+    <div class="row media my-5 p-3 border">
+        <div class="col-md-3 col-sm-12">
+            <a href="{% url 'main:detail' bb.rubric.slug bb.slug %}">
+                {% if bb.image %}
+                <img class="mr-3" src="{{ bb.image|thumbnail_url:'default'}}">
+                {% else %}
+                <img class="mr-3" src="{% static 'main/empty.jpg' %}">
+                {% endif %}
+                </a>
+        </div>
+        <div class="col-md-8 col-sm-12 media-body">
+            <h3><a href="{% url 'main:detail' bb.rubric.slug bb.slug %}">{{ bb.title }}</a></h3>
+                <div>{{ bb.content|truncatewords:40|safe }}</div>
                 {%if bb.price %}
                 <p class="text-right font-weight-bold"> {{ bb.price }} руб. </p>
-                
+        
                 {% endif %}
-                
                 <a href="{% url 'main:detail' bb.rubric.slug bb.slug %}"> Читать далее </a>
                 <p class="text-right font-italic">{{ bb.created_at }}</p>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
+        </div>
+    </div>
+    {%endfor%}
     {% bootstrap_pagination page url=keyword %}
-
     {% endif %}
+
 
 {% endblock %}

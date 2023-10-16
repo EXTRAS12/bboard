@@ -13,5 +13,6 @@
     {% bootstrap_form form layout='horizontal' %}
     {% buttons submit='Зарегистрироваться' %}{% endbuttons %}
 </form>
+<a href="{% url 'main:other' page='policy' %}">Политика конфиденциальности</a>
 {% endif %}
 {% endblock %}

@@ -88,23 +88,25 @@ class AdditionalImageInline(admin.TabularInline):
 
 
 class BbAdmin(admin.ModelAdmin):
-    list_display = ('rubric', 'title', 'content', 'author', 'created_at')
+    list_display = ('rubric', 'title', 'author', 'created_at')
     fields = (('rubric', 'author'), 'title', 'slug', 'content', 'price', 'url', 'short_url',
               'contacts', 'image', 'is_active')
+    list_filter = ('rubric', 'author')
+    list_per_page = 30
     inlines = (AdditionalImageInline,)
     form = BbAdminForm
     list_select_related = ['author', 'rubric', 'rubric__super_rubric']
 
-    def save_model(self, request, obj, form, change):
+    # def save_model(self, request, obj, form, change):
         
-        if form.has_changed():
-            random_chars_list = list(string.ascii_letters)
-            random_chars = ''
-            for i in range(6):
-                random_chars += random.choice(random_chars_list)
-            obj.short_url = random_chars
-            obj.save()
-        super().save_model(request, obj, form, change)
+    #     if form.has_changed():
+    #         random_chars_list = list(string.ascii_letters)
+    #         random_chars = ''
+    #         for i in range(6):
+    #             random_chars += random.choice(random_chars_list)
+    #         obj.short_url = random_chars
+    #         obj.save()
+    #     super().save_model(request, obj, form, change)
 
 
 class CommentAdmin(admin.ModelAdmin):

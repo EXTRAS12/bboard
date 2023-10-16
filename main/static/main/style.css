@@ -3,8 +3,17 @@ body {
   font-family: 'Ubuntu', sans-serif;
 }
 header h1 {
-  background: url('bg.jpeg') left / auto 100% no-repeat, url('bg.jpeg') right / auto 100% no-repeat;
+  background: url('bg.jpeg') left / auto 100% no-repeat, url('bg.jpeg') right / auto 100% no-repeat; 
 }
+
+
+header h1 .hide-on-mobile { 
+  display: inline;}
+/* Smartphone Portrait and Landscape */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px){ .hide-on-mobile { display: none; }}
+
 
 img.main-image {
   width: 300px;

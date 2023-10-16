@@ -34,7 +34,9 @@ class BbForm(forms.ModelForm):
         widgets = {
             'author': forms.HiddenInput,
             'slug': forms.HiddenInput,
+            'short_url': forms.HiddenInput,
             'rubric': forms.Select(attrs={'class': 'form-control'}),}
+    
 
 AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
 
